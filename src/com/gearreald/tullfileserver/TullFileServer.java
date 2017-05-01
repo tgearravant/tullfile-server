@@ -4,6 +4,8 @@ import static spark.Spark.*;
 
 import static spark.debug.DebugScreen.*;
 
+import com.gearreald.tullfileserver.files.TullFileSystem;
+
 public class TullFileServer {
 	public static void main(String[] args) {
     	initialConfiguration();
@@ -12,5 +14,6 @@ public class TullFileServer {
 		enableDebugScreen();
 		port(12345);
 		Routing.setRouting();
+		TullFileSystem.getTFS();
 	}
 }

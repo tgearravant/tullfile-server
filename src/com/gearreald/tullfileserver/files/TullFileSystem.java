@@ -25,6 +25,9 @@ public class TullFileSystem {
 	public TullFolder[] getRootFolders(){
 		return this.rootTullFolder.getFolders();
 	}
+	public TullFolder getRootFolder(){
+		return this.rootTullFolder;
+	}
 	public TullFolder getTullFolderAtPath(String s) throws FileNotFoundException {
 		String[] path = s.split("/");
 		TullFolder currentFolder = this.rootTullFolder;
