@@ -3,9 +3,12 @@ package com.gearreald.tullfileserver;
 import static spark.Spark.*;
 
 import com.gearreald.tullfileserver.controllers.AuthController;
+import com.gearreald.tullfileserver.controllers.ListingController;
 
 public final class Routing {
-	public final static String INDEX = "/";
+	
+	public final static String LIST_FILES="list/";
+	
 	public static void setRouting(){
 		getRouting();
 		postRouting();
@@ -16,7 +19,7 @@ public final class Routing {
 		
 	}
 	private static void postRouting(){
-		
+		post(LIST_FILES,ListingController.listFiles);
 	}
 	private static void headRouting(){
 		head("*",AuthController.checkKey);

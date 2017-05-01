@@ -1,0 +1,4 @@
+api_key=lol
+port=12345
+home_directory_subfolder_name=TullFile
+tullfile_suffix=.tullfile
