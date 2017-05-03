@@ -58,7 +58,7 @@ public class SystemUtils {
 	 */
 	private static void loadPropertiesWithDefaults(){
 		Properties defaultProps = new Properties();
-		System.out.println(SystemUtils.class.getClassLoader().getResource("utils/config.properties"));
+		//System.out.println(SystemUtils.class.getClassLoader().getResource("config.properties"));
 		loadProperties(defaultProps,"config.properties.default");
 		if(inTesting()){
 			SystemUtils.properties=defaultProps;
