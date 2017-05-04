@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.gearreald.tullfileserver.utils.SystemUtils;
+
 public class TullFolder {
 	private File folderLocation;
 	public TullFolder(File directory){
@@ -25,8 +27,9 @@ public class TullFolder {
 	public TullFolder[] getFolders(){
 		File[] allEntries = this.folderLocation.listFiles();
 		ArrayList<TullFolder> files = new ArrayList<TullFolder>();
+		String fileSuffix = SystemUtils.getProperty("tullfile_suffix");
 		for(File e : allEntries){
-			if(e.isDirectory() && !e.getName().endsWith(".tullfile")){
+			if(e.isDirectory() && !e.getName().endsWith(fileSuffix)){
 				files.add(new TullFolder(e));
 			}
 		}

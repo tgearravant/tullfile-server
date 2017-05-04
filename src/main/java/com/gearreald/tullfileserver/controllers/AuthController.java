@@ -9,7 +9,6 @@ import spark.Route;
 public class AuthController {
 	public static Route checkKey = (Request request, Response response) -> {
 		String key = request.headers("Authorization");
-		System.out.println(key);
 		String expectedKey = SystemUtils.getProperty("api_key");
 		if(!key.equals(expectedKey))
 			response.status(403);
