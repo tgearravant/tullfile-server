@@ -38,7 +38,7 @@
 	<dependency>
 	  <groupId>net.tullco</groupId>
 	  <artifactId>TullUtils</artifactId>
-	  <version>0.6</version>
+	  <version>0.7</version>
 	</dependency>
 	<dependency>
    	  <groupId>org.json</groupId>
@@ -47,7 +47,6 @@
     </dependency>
   </dependencies>
   <build>
-    <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>

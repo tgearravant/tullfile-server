@@ -35,21 +35,49 @@ public class TullFolder {
 		}
 		return files.toArray(new TullFolder[0]);
 	}
+	public boolean hasFolder(String name){
+		try{
+			this.getFolder(name);
+		}catch(FileNotFoundException e){
+			return false;
+		}
+		return true;
+	}
 	public TullFolder getFolder(String name) throws FileNotFoundException {
+		return getFolder(name,false);
+	}
+	public TullFolder getFolder(String name, boolean create) throws FileNotFoundException {
 		TullFolder[] folders = this.getFolders();
 		for (TullFolder f: folders){
 			if(f.getName().equals(name))
 				return f;
 		}
-		throw new FileNotFoundException("The specified folder does not exist.");
+		if(create){
+			File newFolder = new File(this.getAbsolutePath()+name);
+			newFolder.mkdir();
+			return new TullFolder(newFolder);
+		}
+		else{
+			throw new FileNotFoundException("The specified folder does not exist.");
+		}
 	}
 	public TullFile getFile(String name) throws FileNotFoundException {
+		return getFile(name,false);
+	}
+	public TullFile getFile(String name, boolean create) throws FileNotFoundException {
 		TullFile[] files = this.getFiles();
 		for (TullFile f: files){
 			if(f.getName().equals(name))
 				return f;
 		}
-		throw new FileNotFoundException("The specified file does not exist.");
+		if(create){
+			File newFile = new File(this.getAbsolutePath()+name+TullFileSystem.TULLFILE_SUFFIX);
+			newFile.mkdir();
+			return new TullFile(newFile);
+		}
+		else{
+			throw new FileNotFoundException("The specified file does not exist.");
+		}
 	}
 	public String getName(){
 		return this.folderLocation.getName();
@@ -71,5 +99,8 @@ public class TullFolder {
 	}
 	public String toString(){
 		return this.toJSON().toString();
+	}
+	public String getAbsolutePath(){
+		return this.folderLocation.getAbsolutePath();
 	}
 }

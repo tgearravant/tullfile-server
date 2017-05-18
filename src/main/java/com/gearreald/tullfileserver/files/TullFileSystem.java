@@ -30,13 +30,13 @@ public class TullFileSystem {
 			System.out.println(f.getName());
 		return this.rootTullFolder;
 	}
-	public TullFolder getTullFolderAtPath(String s) throws FileNotFoundException {
+	public TullFolder getTullFolderAtPath(String s, boolean create) throws FileNotFoundException {
 		if(s.equals("/"))
 			return this.getRootFolder();
 		String[] path = s.split("/");
 		TullFolder currentFolder = this.rootTullFolder;
 		for(int i=0;i<path.length;i++){
-			currentFolder = currentFolder.getFolder(path[i]);
+			currentFolder = currentFolder.getFolder(s, create);
 		}
 		return currentFolder;
 	}
