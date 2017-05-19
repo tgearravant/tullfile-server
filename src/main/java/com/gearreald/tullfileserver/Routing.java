@@ -3,6 +3,7 @@ package com.gearreald.tullfileserver;
 import static spark.Spark.*;
 
 import com.gearreald.tullfileserver.controllers.AuthController;
+import com.gearreald.tullfileserver.controllers.DownloadController;
 import com.gearreald.tullfileserver.controllers.ListingController;
 import com.gearreald.tullfileserver.controllers.UploadController;
 
@@ -10,6 +11,7 @@ public final class Routing {
 	
 	public final static String LIST_FILES="list/";
 	public final static String UPLOAD_FILES="upload/";
+	public final static String DOWNLOAD_FILES="download/";
 	
 	public static void setRouting(){
 		getRouting();
@@ -18,7 +20,7 @@ public final class Routing {
 		
 	}
 	private static void getRouting(){
-		
+		get(DOWNLOAD_FILES, DownloadController.downloadFiles);
 	}
 	private static void postRouting(){
 		post(LIST_FILES, ListingController.listFiles);

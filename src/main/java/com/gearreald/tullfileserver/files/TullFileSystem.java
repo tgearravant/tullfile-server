@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 
 import com.gearreald.tullfileserver.utils.SystemUtils;
 
+import net.tullco.tullutils.StringUtils;
+
 public class TullFileSystem {
 	
 	public static String TULLFILE_SUFFIX=SystemUtils.getProperty("tullfile_suffix");
@@ -31,12 +33,14 @@ public class TullFileSystem {
 		return this.rootTullFolder;
 	}
 	public TullFolder getTullFolderAtPath(String s, boolean create) throws FileNotFoundException {
+		String localPath = StringUtils.assureStartsWith(s, "/");
+		System.out.println(localPath);
 		if(s.equals("/"))
 			return this.getRootFolder();
 		String[] path = s.split("/");
 		TullFolder currentFolder = this.rootTullFolder;
-		for(int i=0;i<path.length;i++){
-			currentFolder = currentFolder.getFolder(s, create);
+		for(int i=1;i<=path.length;i++){
+			currentFolder = currentFolder.getFolder(path[i], create);
 		}
 		return currentFolder;
 	}

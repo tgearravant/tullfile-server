@@ -20,7 +20,9 @@ public class ListingController {
 			JSONObject requestJSON = new JSONObject(request.body());
 			String directory = requestJSON.getString("directory");
 			TullFileSystem tfs = TullFileSystem.getTFS();
+			System.out.println(directory);
 			TullFolder folder = tfs.getTullFolderAtPath(directory,false);
+			System.out.println(folder.getAbsolutePath());
 			responseJSON.put("response", folder.toJSON());
 			return responseJSON.toString();
 		}catch(FileNotFoundException e){
