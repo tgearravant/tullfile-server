@@ -71,7 +71,7 @@ public class TullFolder {
 				return f;
 		}
 		if(create){
-			File newFile = new File(this.getAbsolutePath()+name+TullFileSystem.TULLFILE_SUFFIX);
+			File newFile = new File(this.getAbsolutePath()+"/"+name+TullFileSystem.TULLFILE_SUFFIX);
 			newFile.mkdir();
 			return new TullFile(newFile);
 		}

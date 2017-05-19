@@ -18,6 +18,7 @@ public class TullFile {
 	}
 	public void addPiece(int pieceNumber, byte[] data) throws IOException{
 		File piece = new File(getAbsolutePathToPiece(pieceNumber));
+		System.out.println(piece.getAbsolutePath());
 		FileOutputStream output = new FileOutputStream(piece);
 		output.write(data);
 		output.close();
@@ -34,7 +35,7 @@ public class TullFile {
 		return this.getName()+"_"+pieceNumber+".part";
 	}
 	private String getAbsolutePathToPiece(int pieceNumber){
-		return this.fileLocation.getAbsolutePath()+this.getPieceName(pieceNumber);
+		return this.fileLocation.getAbsolutePath()+"/"+this.getPieceName(pieceNumber);
 	}
 	public JSONObject toJSON(){
 		JSONObject main = new JSONObject();
@@ -43,5 +44,8 @@ public class TullFile {
 	}
 	public String toString(){
 		return this.toJSON().toString();
+	}
+	public String getAbsolutePath(){
+		return this.fileLocation.getAbsolutePath();
 	}
 }

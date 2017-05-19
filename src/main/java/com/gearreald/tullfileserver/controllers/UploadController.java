@@ -12,19 +12,28 @@ import spark.Route;
 
 public class UploadController {
 	public static Route uploadFiles = (Request request, Response response) -> {
-		byte[] data = request.bodyAsBytes();
-		String localPath = request.headers("localPath");
-		int pieceNumber = Integer.parseInt(request.headers("pieceNumber"));
-		String[] pathArray = localPath.split("/");
-		String folderPath="";
-		for(int i=0;i<pathArray.length-1;i++){
-			folderPath+=pathArray[i];
+		try{
+			String localPath = request.headers("localPath");
+			if(!localPath.startsWith("/")){
+				localPath = "/"+localPath;
+			}
+			String fileName = request.headers("fileName");
+			int pieceNumber = Integer.parseInt(request.headers("pieceNumber"));
+			
+			System.out.println("Uploading piece "+pieceNumber+" of file "+fileName+" at "+localPath);
+			TullFolder fileFolder = TullFileSystem.getTFS().getTullFolderAtPath(localPath, true);
+			TullFile file = fileFolder.getFile(fileName, true);
+			System.out.println(file.getAbsolutePath());
+			byte[] data = request.bodyAsBytes();
+			file.addPiece(pieceNumber, data);
+			JSONObject json = new JSONObject();
+			json.put("status", "success");
+			return json.toString();
+		}catch(Exception e){
+			e.printStackTrace();
+			JSONObject json = new JSONObject();
+			json.put("status", "failure");
+			return json.toString();
 		}
-		TullFolder fileFolder = TullFileSystem.getTFS().getTullFolderAtPath(folderPath, true);
-		TullFile file = fileFolder.getFile(pathArray[pathArray.length-1], true);
-		file.addPiece(pieceNumber, data);
-		JSONObject json = new JSONObject();
-		json.put("status", "success");
-		return json.toString();
 	};
 }
