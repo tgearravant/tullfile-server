@@ -49,11 +49,12 @@ public class TullFolder {
 	public TullFolder getFolder(String name, boolean create) throws FileNotFoundException {
 		TullFolder[] folders = this.getFolders();
 		for (TullFolder f: folders){
-			if(f.getName().equals(name))
+			if(f.getName().equals(name)){
 				return f;
+			}
 		}
 		if(create){
-			File newFolder = new File(this.getAbsolutePath()+name);
+			File newFolder = new File(this.getAbsolutePath()+"/"+name);
 			newFolder.mkdir();
 			return new TullFolder(newFolder);
 		}

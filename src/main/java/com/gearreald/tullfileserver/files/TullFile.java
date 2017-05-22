@@ -4,11 +4,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.DigestOutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.DatatypeConverter;
+
 import org.json.JSONObject;
 
+import net.tullco.tullutils.FileUtils;
 import net.tullco.tullutils.StringUtils;
 
 public class TullFile {
@@ -24,12 +30,15 @@ public class TullFile {
 		String name = this.fileLocation.getName();
 		return name.substring(0, name.length()-TullFileSystem.TULLFILE_SUFFIX.length());
 	}
-	public void addPiece(int pieceNumber, byte[] data) throws IOException{
+	public void addPiece(int pieceNumber, byte[] data) throws IOException, NoSuchAlgorithmException{
 		File piece = new File(getAbsolutePathToPiece(pieceNumber));
-		System.out.println(piece.getAbsolutePath());
-		FileOutputStream output = new FileOutputStream(piece);
-		output.write(data);
-		output.close();
+		File pieceSha = new File(getAbsolutePathToPiece(pieceNumber)+".sha1");
+		MessageDigest md = MessageDigest.getInstance("SHA-1");
+
+		DigestOutputStream digest = new DigestOutputStream(new FileOutputStream(piece),md);
+		digest.write(data);
+		digest.close();
+		FileUtils.writeStringToFile(DatatypeConverter.printHexBinary(md.digest()), pieceSha);
 	}
 	public File getPiece(int pieceNumber) throws FileNotFoundException{
 		File f = new File(getAbsolutePathToPiece(pieceNumber));
@@ -37,7 +46,6 @@ public class TullFile {
 			throw new FileNotFoundException("The requested piece does not exist.");
 		else
 			return f;
-		
 	}
 	public int totalPieces(){
 		File[] files = getUnorderedPieces();
@@ -74,6 +82,13 @@ public class TullFile {
 		main.put("name",this.getName());
 		main.put("pieces", this.totalPieces());
 		return main;
+	}
+	public void delete(){
+		File[] subfiles = this.fileLocation.listFiles();
+		for(File subfile: subfiles){
+			subfile.delete();
+		}
+		this.fileLocation.delete();
 	}
 	public String getAbsolutePath(){
 		return this.fileLocation.getAbsolutePath();
