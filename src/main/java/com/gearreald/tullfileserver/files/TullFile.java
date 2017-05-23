@@ -47,6 +47,10 @@ public class TullFile {
 		else
 			return f;
 	}
+	public String getPieceHash(int pieceNumber) throws IOException{
+		File f = new File(getAbsolutePathToPiece(pieceNumber)+".sha1");
+		return FileUtils.getFileAsString(f);
+	}
 	public int totalPieces(){
 		File[] files = getUnorderedPieces();
 		int totalPieces = 0;

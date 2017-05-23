@@ -1,5 +1,7 @@
 package com.gearreald.tullfileserver.controllers;
 
+import org.json.JSONObject;
+
 import com.gearreald.tullfileserver.utils.SystemUtils;
 
 import spark.Request;
@@ -14,6 +16,8 @@ public class AuthController {
 			response.status(403);
 		else
 			response.status(200);
-		return "";
+		JSONObject output = new JSONObject();
+		output.put("authenticated", "true");
+		return output;
 	};
 }
