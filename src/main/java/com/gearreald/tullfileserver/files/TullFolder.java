@@ -3,11 +3,8 @@ package com.gearreald.tullfileserver.files;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.gearreald.tullfileserver.utils.SystemUtils;
 
 public class TullFolder {
 	private File folderLocation;
@@ -18,7 +15,7 @@ public class TullFolder {
 		File[] allEntries = this.folderLocation.listFiles();
 		ArrayList<TullFile> files = new ArrayList<TullFile>();
 		for(File e : allEntries){
-			if(e.isDirectory() && e.getName().endsWith(".tullfile")){
+			if(e.isDirectory() && e.getName().endsWith(TullFileSystem.TULLFILE_SUFFIX)){
 				files.add(new TullFile(e));
 			}
 		}
@@ -27,7 +24,7 @@ public class TullFolder {
 	public TullFolder[] getFolders(){
 		File[] allEntries = this.folderLocation.listFiles();
 		ArrayList<TullFolder> files = new ArrayList<TullFolder>();
-		String fileSuffix = SystemUtils.getProperty("tullfile_suffix");
+		String fileSuffix = TullFileSystem.TULLFILE_SUFFIX;
 		for(File e : allEntries){
 			if(e.isDirectory() && !e.getName().endsWith(fileSuffix)){
 				files.add(new TullFolder(e));
@@ -82,6 +79,15 @@ public class TullFolder {
 	}
 	public String getName(){
 		return this.folderLocation.getName();
+	}
+	public void delete(){
+		for(TullFile f: this.getFiles()){
+			f.delete();
+		}
+		for(TullFolder f: this.getFolders()){
+			f.delete();
+		}
+		this.folderLocation.delete();
 	}
 	public JSONObject toJSON(){
 		JSONObject main = new JSONObject();

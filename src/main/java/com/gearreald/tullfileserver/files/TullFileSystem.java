@@ -41,7 +41,11 @@ public class TullFileSystem {
 		}
 		return currentFolder;
 	}
+	public TullFolder getTullFolderAtPath(String directory) throws FileNotFoundException {
+		return getTullFolderAtPath(directory,false);
+	}
 	public static TullFileSystem getTFS(){
 		return new TullFileSystem(SystemUtils.getProperty("home_directory_subfolder_name"));
 	}
+
 }

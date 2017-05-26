@@ -94,6 +94,13 @@ public class TullFile {
 		}
 		this.fileLocation.delete();
 	}
+	public int fileSize(){
+		int totalSize=0;
+		for(File f: this.getUnorderedPieces()){
+			totalSize+=f.length();
+		}
+		return totalSize;
+	}
 	public String getAbsolutePath(){
 		return this.fileLocation.getAbsolutePath();
 	}

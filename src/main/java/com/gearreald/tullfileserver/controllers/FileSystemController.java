@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.gearreald.tullfileserver.files.TullFileSystem;
+import com.gearreald.tullfileserver.files.TullFolder;
 
 import spark.Request;
 import spark.Response;
@@ -17,7 +18,6 @@ public class FileSystemController {
 		try{
 			response.type("application/json");
 			JSONObject requestJSON = new JSONObject(request.body());
-			System.out.println(requestJSON.toString());
 			String directory = requestJSON.getString("directory");
 			String name = requestJSON.getString("name");
 			TullFileSystem tfs = TullFileSystem.getTFS();
@@ -43,15 +43,14 @@ public class FileSystemController {
 		try{
 			response.type("application/json");
 			JSONObject requestJSON = new JSONObject(request.body());
-			System.out.println(requestJSON.toString());
 			String directory = requestJSON.getString("directory");
-			String name = requestJSON.getString("name");
 			TullFileSystem tfs = TullFileSystem.getTFS();
-			tfs.getTullFolderAtPath(directory+"/"+name,true);
+			TullFolder f = tfs.getTullFolderAtPath(directory);
+			f.delete();
 			responseJSON.put("message","success");
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
-			responseJSON.put("error", "The file was not found.");
+			responseJSON.put("error", "The folder was not found.");
 			responseJSON.put("message", e.getMessage());
 		}catch(JSONException e){
 			e.printStackTrace();
@@ -69,11 +68,11 @@ public class FileSystemController {
 		try{
 			response.type("application/json");
 			JSONObject requestJSON = new JSONObject(request.body());
-			System.out.println(requestJSON.toString());
 			String directory = requestJSON.getString("directory");
 			String name = requestJSON.getString("name");
 			TullFileSystem tfs = TullFileSystem.getTFS();
-			tfs.getTullFolderAtPath(directory+"/"+name,true);
+			TullFolder folder = tfs.getTullFolderAtPath(directory);
+			folder.getFile(name).delete();
 			responseJSON.put("message","success");
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
