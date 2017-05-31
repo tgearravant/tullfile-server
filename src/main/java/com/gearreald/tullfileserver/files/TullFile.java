@@ -81,6 +81,29 @@ public class TullFile {
 	private String getAbsolutePathToPiece(int pieceNumber){
 		return this.fileLocation.getAbsolutePath()+"/"+this.getPieceName(pieceNumber);
 	}
+	private File getHashFile(){
+		String path = StringUtils.assureEndsWith(this.fileLocation.getAbsolutePath(),"/")+"file_hash.sha1";
+		System.out.println(path);
+		File hashFile = new File(path);
+		return hashFile;
+	}
+	public boolean setFileHash(String hash){
+		try{
+			File hashFile = getHashFile();
+			FileUtils.writeStringToFile(hash, hashFile);
+			return true;
+		}catch(IOException e){
+			return false;
+		}
+	}
+	public String getFileHash() {
+		try{
+			File hashFile = getHashFile();
+			return FileUtils.getFileAsString(hashFile);
+		}catch(IOException e){
+			return null;
+		}
+	}
 	public JSONObject toJSON(){
 		JSONObject main = new JSONObject();
 		main.put("name",this.getName());

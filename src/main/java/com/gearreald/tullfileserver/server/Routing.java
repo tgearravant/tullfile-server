@@ -18,11 +18,13 @@ public final class Routing {
 	public final static String NEW_FOLDER="new/";
 	public final static String UPLOAD_FILES="upload/";
 	public final static String VERIFY_PIECE="verify/";
+	public final static String VERIFY_FILE="verify_file/";
 	
 	public static void setRouting(){
 		beforeRouting();
 		getRouting();
 		postRouting();
+		putRouting();
 		headRouting();
 		deleteRouting();		
 	}
@@ -31,12 +33,16 @@ public final class Routing {
 	}
 	private static void getRouting(){
 		get(DOWNLOAD_FILES, DownloadController.downloadFiles);
-		get(VERIFY_PIECE, VerificationController.getHash);
+		get(VERIFY_PIECE, VerificationController.getPieceHash);
+		get(VERIFY_FILE, VerificationController.getFullFileHash);
 	}
 	private static void postRouting(){
 		post(LIST_FILES, ListingController.listFiles);
 		post(NEW_FOLDER, FileSystemController.newFolder);
 		post(UPLOAD_FILES, UploadController.uploadFiles);
+	}
+	private static void putRouting(){
+		put(VERIFY_FILE, VerificationController.setFullFileHash);
 	}
 	private static void headRouting(){
 		head("*",AuthController.checkKey);
