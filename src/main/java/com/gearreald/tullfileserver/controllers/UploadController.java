@@ -23,7 +23,6 @@ public class UploadController {
 			//System.out.println("Uploading piece "+pieceNumber+" of file "+fileName+" at "+localPath);
 			TullFolder fileFolder = TullFileSystem.getTFS().getTullFolderAtPath(localPath, true);
 			TullFile file = fileFolder.getFile(fileName, true);
-			System.out.println(file.getAbsolutePath());
 			byte[] data = request.bodyAsBytes();
 			file.addPiece(pieceNumber, data);
 			JSONObject json = new JSONObject();

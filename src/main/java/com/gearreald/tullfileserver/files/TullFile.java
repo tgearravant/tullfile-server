@@ -83,7 +83,6 @@ public class TullFile {
 	}
 	private File getHashFile(){
 		String path = StringUtils.assureEndsWith(this.fileLocation.getAbsolutePath(),"/")+"file_hash.sha1";
-		System.out.println(path);
 		File hashFile = new File(path);
 		return hashFile;
 	}
@@ -108,6 +107,7 @@ public class TullFile {
 		JSONObject main = new JSONObject();
 		main.put("name",this.getName());
 		main.put("pieces", this.totalPieces());
+		main.put("size", this.fileSize());
 		return main;
 	}
 	public void delete(){
@@ -117,8 +117,8 @@ public class TullFile {
 		}
 		this.fileLocation.delete();
 	}
-	public int fileSize(){
-		int totalSize=0;
+	public long fileSize(){
+		long totalSize=0;
 		for(File f: this.getUnorderedPieces()){
 			totalSize+=f.length();
 		}
