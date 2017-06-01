@@ -19,6 +19,7 @@ public final class Routing {
 	public final static String UPLOAD_FILES="upload/";
 	public final static String VERIFY_PIECE="verify/";
 	public final static String VERIFY_FILE="verify_file/";
+	public final static String GET_CURRENT_PIECES="status/pieces/";
 	
 	public static void setRouting(){
 		beforeRouting();
@@ -35,6 +36,7 @@ public final class Routing {
 		get(DOWNLOAD_FILES, DownloadController.downloadFiles);
 		get(VERIFY_PIECE, VerificationController.getPieceHash);
 		get(VERIFY_FILE, VerificationController.getFullFileHash);
+		get(GET_CURRENT_PIECES, FileSystemController.currentPieceCount);
 	}
 	private static void postRouting(){
 		post(LIST_FILES, ListingController.listFiles);
