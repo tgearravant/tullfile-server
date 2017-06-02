@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class SystemUtils {
-	private static Boolean inTesting=false;
 	final private static Boolean IS_WINDOWS;
 	final private static String[] REQUIRED_PROPERTIES;
 	private static Properties properties=null;
@@ -18,14 +17,26 @@ public class SystemUtils {
 		checkForRequiredProperties();
 	}
 	
+	private static String getEnvironment(){
+		return getProperty("environment","development");
+	}
 	public static boolean inProduction(){
-		return !IS_WINDOWS;
+		if(getEnvironment().equals("production"))
+			return true;
+		else
+			return false;
+	}
+	public static boolean inDevelopment(){
+		if(getEnvironment().equals("development"))
+			return true;
+		else
+			return false;
 	}
 	public static boolean inTesting(){
-		return inTesting;
-	}
-	public static void setTesting(boolean testing){
-		inTesting=testing;
+		if(getEnvironment().equals("testing"))
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -68,10 +79,6 @@ public class SystemUtils {
 		Properties defaultProps = new Properties();
 		//System.out.println(SystemUtils.class.getClassLoader().getResource("config.properties"));
 		loadProperties(defaultProps,"config.properties.default");
-		if(inTesting()){
-			SystemUtils.properties=defaultProps;
-			return;
-		}
 		Properties p=new Properties(defaultProps);
 		loadProperties(p,"config.properties");
 		SystemUtils.properties=p;
