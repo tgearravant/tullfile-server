@@ -3,7 +3,7 @@
   <groupId>com.gearreald</groupId>
   <artifactId>tullfileserver</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <name>TullFile Server</name>
   <description>The server component of the TullFile system.</description>
   <repositories>
