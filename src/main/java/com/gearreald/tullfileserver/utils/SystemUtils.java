@@ -6,10 +6,18 @@ import java.util.Properties;
 
 public class SystemUtils {
 	private static Boolean inTesting=false;
-	final private static Boolean IS_WINDOWS=(System.getProperty("os.name").contains("Windows"));
-	final private static String[] requiredProperties={"admin_username","admin_password","s3_access_key_id","s3_secret_key","backup_key"};
+	final private static Boolean IS_WINDOWS;
+	final private static String[] REQUIRED_PROPERTIES;
 	private static Properties properties=null;
 
+	static {
+		IS_WINDOWS=(System.getProperty("os.name").contains("Windows"));
+		String[] required ={"api_key","port","home_directory_subfolder_name","tullfile_suffix"};
+		REQUIRED_PROPERTIES=required;
+		loadPropertiesWithDefaults();
+		checkForRequiredProperties();
+	}
+	
 	public static boolean inProduction(){
 		return !IS_WINDOWS;
 	}
@@ -110,7 +118,7 @@ public class SystemUtils {
 		if(SystemUtils.properties == null){
 			loadPropertiesWithDefaults();
 		}
-		for(String s:requiredProperties){
+		for(String s:REQUIRED_PROPERTIES){
 			if (SystemUtils.getProperty(s)==null)
 				throw new RuntimeException("Required Property "+s+" is undefined");
 		}
