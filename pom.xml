@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gearreald</groupId>
   <artifactId>tullfileserver</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1</version>
   <packaging>jar</packaging>
   <name>TullFile Server</name>
   <description>The server component of the TullFile system.</description>
@@ -49,11 +49,14 @@
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.6</version>
+      	<groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
         <configuration>
-          <warSourceDirectory>WebContent</warSourceDirectory>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
+          <manifest>
+            <addClasspath>true</addClasspath>
+            <mainClass>.com.gearreald.tullfileserver.TullFileServer</mainClass>
+          </manifest>
         </configuration>
       </plugin>
       <plugin>
