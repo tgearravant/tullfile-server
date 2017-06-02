@@ -53,9 +53,8 @@ public class FileSystemController {
 			responseJSON.put("message","success");
 			responseJSON.put("piece_count", amount);
 		}catch(FileNotFoundException e){
-			e.printStackTrace();
-			responseJSON.put("error", "The file was not found.");
-			responseJSON.put("message", e.getMessage());
+			responseJSON.put("message","success");
+			responseJSON.put("piece_count", 0);
 		}catch(JSONException e){
 			e.printStackTrace();
 			responseJSON.put("error", "The request was invalid.");
