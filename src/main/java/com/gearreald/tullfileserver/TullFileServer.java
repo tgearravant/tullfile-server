@@ -14,7 +14,7 @@ public class TullFileServer {
 	}
 	public static void initialConfiguration(){
 		if(SystemUtils.getProperty("use_ssl").equals("true")) {
-			secure(SystemUtils.getProperty("keystore_location"), SystemUtils.getProperty("keystore_password"), null, null);
+			secure(SystemUtils.getProperty("keystore_location"), SystemUtils.getProperty("keystore_passphrase"), null, null);
 		}
 		if(SystemUtils.getProperty("environment").equals("development")){
 			enableDebugScreen();

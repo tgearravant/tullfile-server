@@ -5,4 +5,4 @@ tullfile_suffix=.tullfile
 environment=development
 #use_ssl=true
 #keystore_location=blah
-#keystore_passwork=secretblah
+#keystore_passphrase=secretblah
