@@ -56,7 +56,6 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <classpathPrefix>lib/</classpathPrefix>
               <mainClass>com.gearreald.tullfileserver.TullFileServer</mainClass>
             </manifest>
           </archive>
