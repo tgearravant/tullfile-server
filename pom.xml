@@ -53,10 +53,12 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.0.2</version>
         <configuration>
-          <manifest>
-            <addClasspath>true</addClasspath>
-            <mainClass>.com.gearreald.tullfileserver.TullFileServer</mainClass>
-          </manifest>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>.com.gearreald.tullfileserver.TullFileServer</mainClass>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
       <plugin>
