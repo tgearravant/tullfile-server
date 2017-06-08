@@ -71,7 +71,6 @@ public class VerificationController {
 			TullFolder folder = TullFileSystem.getTFS().getTullFolderAtPath(localPath);
 			TullFile file = folder.getFile(fileName);
 			String hash = file.getFileHash();
-			System.out.println("Hash from get function: "+hash);
 			if(hash == null){
 				throw new FileNotFoundException();
 			}
