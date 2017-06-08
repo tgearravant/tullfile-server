@@ -48,7 +48,7 @@ public class VerificationController {
 			String localPath = StringUtils.assureStartsWith(requestJSON.getString("localPath"),"/");
 			String hash = requestJSON.getString("file_hash");
 			TullFolder folder = TullFileSystem.getTFS().getTullFolderAtPath(localPath);
-			TullFile file = folder.getFile(fileName);
+			TullFile file = folder.getFile(fileName,true);
 			file.setFileHash(hash);
 			responseJSON.put("status", "success");
 			responseJSON.put("fileName", fileName);
@@ -71,6 +71,7 @@ public class VerificationController {
 			TullFolder folder = TullFileSystem.getTFS().getTullFolderAtPath(localPath);
 			TullFile file = folder.getFile(fileName);
 			String hash = file.getFileHash();
+			System.out.println("Hash from get function: "+hash);
 			if(hash == null){
 				throw new FileNotFoundException();
 			}

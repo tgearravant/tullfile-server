@@ -20,7 +20,6 @@ public class UploadController {
 			String fileName = request.headers("fileName");
 			int pieceNumber = Integer.parseInt(request.headers("pieceNumber"));
 			
-			//System.out.println("Uploading piece "+pieceNumber+" of file "+fileName+" at "+localPath);
 			TullFolder fileFolder = TullFileSystem.getTFS().getTullFolderAtPath(localPath, true);
 			TullFile file = fileFolder.getFile(fileName, true);
 			byte[] data = request.bodyAsBytes();

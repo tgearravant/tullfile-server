@@ -1,5 +1,6 @@
 package com.gearreald.tullfileserver.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -16,7 +17,13 @@ public class SystemUtils {
 		loadPropertiesWithDefaults();
 		checkForRequiredProperties();
 	}
-	
+	public static File getNullFile(){
+		if(IS_WINDOWS){
+			return new File("NUL");
+		}else{
+			return new File("/dev/null");
+		}
+	}
 	private static String getEnvironment(){
 		return getProperty("environment","development");
 	}
