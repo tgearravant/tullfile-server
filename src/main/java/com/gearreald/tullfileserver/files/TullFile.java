@@ -14,6 +14,8 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.json.JSONObject;
 
+import com.gearreald.tullfileserver.utils.SystemUtils;
+
 import net.tullco.tullutils.FileUtils;
 import net.tullco.tullutils.StringUtils;
 
@@ -52,21 +54,21 @@ public class TullFile {
 		return FileUtils.getFileAsString(f);
 	}
 	public int totalPieces(){
-		File[] files = getUnorderedPieces();
-		int totalPieces = 0;
+		return this.getUnorderedPieces().size();
+	}
+	private List<File> getUnorderedPieces(){
+		File[] files = this.fileLocation.listFiles();
+		List<File> pieceFiles = new ArrayList<File>();
 		for(File f: files){
 			if(f.getName().endsWith(".part"))
-				totalPieces++;
+				pieceFiles.add(f);
 		}
-		return totalPieces;
-	}
-	private File[] getUnorderedPieces(){
-		return this.fileLocation.listFiles();
+		return pieceFiles;
 	}
 	public List<File> getPieces(){
 		ArrayList<File> orderedFiles = new ArrayList<File>();
 		ArrayList<String> filePaths = new ArrayList<String>();
-		File[] files = getUnorderedPieces();
+		List<File> files = getUnorderedPieces();
 		for(File f: files)
 			filePaths.add(f.getAbsolutePath());
 		filePaths.sort(null);
@@ -86,6 +88,11 @@ public class TullFile {
 		File hashFile = new File(path);
 		return hashFile;
 	}
+	/**
+	 * Sets the hash of the full file to the given string.
+	 * @param hash The full file hash.
+	 * @return True if there were no problems. False if it didn't happen.
+	 */
 	public boolean setFileHash(String hash){
 		try{
 			File hashFile = getHashFile();
@@ -95,11 +102,27 @@ public class TullFile {
 			return false;
 		}
 	}
+	/**
+	 * Gets the hash of the full file. Either uses the cached value or, if that wasn't populated, traverses through the entire
+	 * file to generate it.
+	 * @return
+	 */
 	public String getFileHash() {
 		try{
 			File hashFile = getHashFile();
 			return FileUtils.getFileAsString(hashFile);
-		}catch(IOException e){
+		}catch(IOException e){}
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-1");
+			DigestOutputStream dis = new DigestOutputStream(new FileOutputStream(SystemUtils.getNullFile()),md);
+			for(File f: this.getPieces()){
+				dis.write(FileUtils.getFileAsBytes(f));
+			}
+			String hash = DatatypeConverter.printHexBinary(md.digest());
+			dis.close();
+			this.setFileHash(hash);
+			return hash;
+		} catch (NoSuchAlgorithmException | IOException e) {
 			return null;
 		}
 	}
